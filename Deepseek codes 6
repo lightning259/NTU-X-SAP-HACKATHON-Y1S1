@@ -1,0 +1,110 @@
+// components/DocumentUpload.js
+import React, { useState } from 'react';
+
+const DocumentUpload = () => {
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    industry: 'healthcare',
+    file: null
+  });
+
+  const handleChange = (e) => {
+    if (e.target.name === 'file') {
+      setFormData({
+        ...formData,
+        file: e.target.files[0]
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // In a real application, this would upload the file to a server
+    alert(`Document "${formData.title}" uploaded successfully for ${formData.industry} industry!`);
+    setFormData({
+      title: '',
+      description: '',
+      industry: 'healthcare',
+      file: null
+    });
+  };
+
+  return (
+    <div className="container page-section">
+      <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Upload Documents for AI Training</h2>
+      
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="title">Document Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="industry">Industry</label>
+            <select
+              id="industry"
+              name="industry"
+              value={formData.industry}
+              onChange={handleChange}
+            >
+              <option value="healthcare">Healthcare</option>
+              <option value="insurance">Insurance</option>
+              <option value="pharmaceutical">Pharmaceutical</option>
+              <option value="research">Research</option>
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <label>Upload Document</label>
+            <div className="file-upload">
+              <input
+                type="file"
+                id="file"
+                name="file"
+                onChange={handleChange}
+                required
+              />
+              <label htmlFor="file">
+                {formData.file ? formData.file.name : 'Click to select a file or drag and drop'}
+              </label>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.5rem' }}>
+              Supported formats: PDF, DOCX, TXT (Max size: 10MB)
+            </p>
+          </div>
+          
+          <button type="submit" className="btn btn-primary">
+            Upload for AI Training
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default DocumentUpload;
