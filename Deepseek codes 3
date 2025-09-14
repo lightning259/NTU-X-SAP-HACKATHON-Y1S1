@@ -1,0 +1,35 @@
+// components/Navigation.js
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const Navigation = ({ isAuthenticated, user, onLogout }) => {
+  return (
+    <nav className="navbar">
+      <div className="container nav-container">
+        <Link to="/" className="logo">Healthcare AI Assistant</Link>
+        
+        <ul className="nav-links">
+          <li><Link to="/">Home</Link></li>
+          {isAuthenticated && user?.role === 'admin' && (
+            <li><Link to="/upload">Upload Documents</Link></li>
+          )}
+          <li><Link to="/chatbot">Chat with AI</Link></li>
+          <li><Link to="/training">Training Materials</Link></li>
+        </ul>
+        
+        <div className="user-section">
+          {isAuthenticated ? (
+            <>
+              <span className="user-info">Welcome, {user.name}</span>
+              <button className="btn btn-secondary" onClick={onLogout}>Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="btn btn-primary">Login</Link>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navigation;
