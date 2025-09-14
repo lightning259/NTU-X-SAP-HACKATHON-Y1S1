@@ -1,0 +1,40 @@
+// components/LandingPage.js
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const LandingPage = () => {
+  return (
+    <div>
+      <section className="hero">
+        <div className="container">
+          <h1>Healthcare AI Assistant</h1>
+          <p>Empowering healthcare professionals with AI-driven insights, documentation assistance, and personalized training materials.</p>
+          <Link to="/chatbot" className="btn btn-primary">Try Our AI Chatbot</Link>
+        </div>
+      </section>
+      
+      <section className="container page-section">
+        <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Our Features</h2>
+        
+        <div className="features">
+          <div className="feature-card">
+            <h3>RAG Document Analysis</h3>
+            <p>Upload medical documents for AI-powered analysis and insights. (Admin only)</p>
+          </div>
+          
+          <div className="feature-card">
+            <h3>AI Chatbot Assistance</h3>
+            <p>Get instant answers to your medical coding and patient care questions.</p>
+          </div>
+          
+          <div className="feature-card">
+            <h3>Training Resources</h3>
+            <p>Access specialized training materials for patient care and medical coding.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default LandingPage;
