@@ -1,0 +1,65 @@
+// components/Chatbot.js
+import React, { useState } from 'react';
+
+const Chatbot = () => {
+  const [messages, setMessages] = useState([
+    {
+      text: "Hello! I'm your healthcare AI assistant. How can I help you today?",
+      sender: "bot"
+    }
+  ]);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    if (!inputValue.trim()) return;
+
+    // Add user message
+    const newMessages = [...messages, { text: inputValue, sender: "user" }];
+    setMessages(newMessages);
+    setInputValue('');
+
+    // Simulate bot response after a short delay
+    setTimeout(() => {
+      setMessages([
+        ...newMessages,
+        { 
+          text: "I've processed your query. In a real implementation, this would provide specific answers based on the trained healthcare knowledge base.", 
+          sender: "bot" 
+        }
+      ]);
+    }, 1000);
+  };
+
+  return (
+    <div className="container page-section">
+      <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>AI Chatbot Assistant</h2>
+      
+      <div className="chat-container">
+        <div className="chat-header">
+          <h3>Healthcare AI Assistant</h3>
+        </div>
+        
+        <div className="chat-messages">
+          {messages.map((message, index) => (
+            <div key={index} className={`message ${message.sender}`}>
+              {message.text}
+            </div>
+          ))}
+        </div>
+        
+        <form onSubmit={handleSend} className="chat-input">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Ask a question about medical coding or patient care..."
+          />
+          <button type="submit" className="btn btn-primary">Send</button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Chatbot;
