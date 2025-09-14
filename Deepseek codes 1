@@ -1,0 +1,61 @@
+// App.js
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import DocumentUpload from './components/DocumentUpload';
+import Chatbot from './components/Chatbot';
+import TrainingMaterials from './components/TrainingMaterials';
+import Navigation from './components/Navigation';
+import Login from './components/Login';
+import './App.css';
+
+function App() {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
+  return (
+    <Router>
+      <div className="App">
+        <Navigation 
+          isAuthenticated={isAuthenticated} 
+          user={user} 
+          onLogout={handleLogout} 
+        />
+        
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route 
+            path="/upload" 
+            element={
+              isAuthenticated && user?.role === 'admin' ? 
+              <DocumentUpload /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/training" element={<TrainingMaterials />} />
+          <Route 
+            path="/login" 
+            element={
+              !isAuthenticated ? 
+              <Login onLogin={handleLogin} /> : 
+              <Navigate to="/" replace />
+            } 
+          />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
