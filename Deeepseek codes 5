@@ -1,0 +1,84 @@
+// components/Login.js
+import React, { useState } from 'react';
+
+const Login = ({ onLogin }) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    role: 'user'
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // In a real application, this would verify credentials with a backend
+    // For demo purposes, we'll simulate a login
+    onLogin({
+      name: formData.email.split('@')[0],
+      email: formData.email,
+      role: formData.role
+    });
+  };
+
+  return (
+    <div className="container page-section">
+      <div className="login-container">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="role">Account Type</label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+            >
+              <option value="user">Standard User</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          
+          <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+            Login
+          </button>
+        </form>
+        
+        <p style={{ marginTop: '1rem', textAlign: 'center', fontSize: '0.9rem', color: '#666' }}>
+          For demo purposes, use any credentials. Select "Administrator" role to access document upload.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
